@@ -15,15 +15,16 @@ public class Demo02Stairs {
 	}
 
 	public static int getSum(int n) {
-		switch (n) {
-			case 1:
-				return 1;
-			case 2:
-				return 2;
-			case 3:
-				return 3;
-			default:
-				return getSum(n - 1) + getSum(n - 2) + getSum(n - 3);
+		if (n <= 2) {
+			return n;
 		}
+		int pre2 = 2;
+		int pre1 = 1;
+		for (int i = 3; i < n; i++) {
+			int next = pre1 + pre2;
+			pre1 = pre2;
+			pre2 = next;
+		}
+		return pre2;
 	}
 }
