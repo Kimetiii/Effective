@@ -7,7 +7,7 @@ import java.util.Vector;
  * 现在有一套积木 包括若干长宽相等 高度不同的长方体房柱和一个房顶 搭建一个房子需要两边等高的房柱和一个房顶
  * 房柱可以拼接 请返回房子可能搭建的最大高度（总高度忽略房顶 提供的房柱无需全部使用）
  * <p>
- * 假如积木里又高度为 1、2、3的房柱
+ * 假如积木里有高度为 1、2、3的房柱
  * 那么可搭建的最大高度为3 其中两边房柱的拼接方式 1+2 3
  * <p>
  * 如果两遍房柱怎么拼接都无法等高 返回0
@@ -22,7 +22,48 @@ import java.util.Vector;
  * <p>
  * 实例：
  * 1、2、3、6 -> 6
+ * <p>
+ * <p>
+ * 1 2 3 4 5 6 6 7
  */
+
+class Main {
+	public static void main(String[] args) {
+/*		Scanner sc = new Scanner(System.in);
+		System.out.println("请输入:");
+		String array = sc.nextLine();
+		int[] pillars = toInt(array);*/
+
+		partionArray partionArray = new partionArray();
+		System.out.println(partionArray.Solution());
+
+	}
+
+	private static int[] toInt(String priceString) {
+		String[] str = priceString.split(",");
+		int[] result = new int[str.length];
+		for (int i = 0; i < str.length; i++) {
+			result[i] = Integer.parseInt(str[i]);
+		}
+		return result;
+	}
+
+	private static Integer getMaxHigh(int[] pillars) {
+		int sum = 0;
+		int memo[][];
+		for (int pillar : pillars) {
+			sum += pillar;
+		}
+
+		if (sum % 2 == 0 && sum != 0) {
+			memo = new int[sum / 2 + 1][sum / 2 + 1];
+			return 0;
+		} else
+			return 0;
+	}
+
+}
+
 class partionArray {
 	private Vector<Integer> arr = new Vector<Integer>();
 	private int sum = 0;
@@ -35,7 +76,7 @@ class partionArray {
 			arr.add(i, iner.nextInt());
 			sum += arr.elementAt(i);
 		}
-
+		// 判断是否能被2整除
 		if (sum % 2 == 0 && sum != 0) {
 			memo = new int[sum / 2 + 1][sum / 2 + 1];
 			return isPartied(arr, 0, sum / 2);
@@ -44,13 +85,17 @@ class partionArray {
 
 	}
 
-	/***
+	/**
 	 * 对数组中的每个元素采用放与不放
 	 * 看那种满足条件
 	 * 动态规划等于穷举加剪枝
 	 * 剪枝就类似于记忆化--对一些不必要的操作进行简化
 	 * 因此用递归时要加上记忆化
 	 * 没有记忆化会导致超时
+	 *
+	 * @param arr
+	 * @param Index
+	 * @param c
 	 * @return
 	 */
 	public boolean isPartied(Vector<Integer> arr, int Index, int c) {
@@ -64,7 +109,8 @@ class partionArray {
 			return memo[Index][c] == 1;      //在这一步成功的将int类型的值转变为boolean类型的值
 		}
 		//在这里对接下来的程序进行记忆化拦截
-		if (isPartied(arr, Index + 1, c) || isPartied(arr, Index + 1, c - arr.elementAt(Index))) {
+		if (isPartied(arr, Index + 1, c) ||
+				isPartied(arr, Index + 1, c - arr.elementAt(Index))) {
 			memo[Index][c] = 1;
 			return true;
 		}
@@ -104,9 +150,11 @@ class partionArray2 {
 			for (int i = 1; i < arr.size(); ++i) {
 				for (int j = 0; j <= n; ++j) {
 					if (j > arr.elementAt(i)) {
-						dp[i][j] = dp[i - 1][j - arr.elementAt(i)];//如果大于的话就看它的dp[i][j]=dp[i-1][j-arr.elementAt(i)]为不为true，如果为true则这个也为true
+						//如果大于的话就看它的dp[i][j]=dp[i-1][j-arr.elementAt(i)]为不为true，如果为true则这个也为true
+						dp[i][j] = dp[i - 1][j - arr.elementAt(i)];
 					}
-					if (j == arr.elementAt(i)) {   //相等则赋值为true，因为只有在它的子序列中找到一个能正好填满背包的值就可以
+					//相等则赋值为true，因为只有在它的子序列中找到一个能正好填满背包的值就可以
+					if (j == arr.elementAt(i)) {
 						dp[i][j] = true;
 					} else {    //小于时保持上一次的值
 						dp[i][j] = dp[i - 1][j];
@@ -121,9 +169,5 @@ class partionArray2 {
 
 }
 
-class Main {
-	public static void main(String[] args) {
-		partionArray2 space = new partionArray2();
-		System.out.println(space.Solution());
-	}
-}
+
+
