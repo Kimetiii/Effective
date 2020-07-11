@@ -1,5 +1,6 @@
 package cn.songsenior.demo;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -10,7 +11,7 @@ import java.util.Vector;
  * 假如积木里有高度为 1、2、3的房柱
  * 那么可搭建的最大高度为3 其中两边房柱的拼接方式 1+2 3
  * <p>
- * 如果两遍房柱怎么拼接都无法等高 返回0
+ * 如果两边房柱怎么拼接都无法等高 返回 0
  * <p>
  * 约束：
  * 1. 0 <= 单个房柱 <=20
@@ -29,13 +30,15 @@ import java.util.Vector;
 
 class Main {
 	public static void main(String[] args) {
-/*		Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in);
 		System.out.println("请输入:");
 		String array = sc.nextLine();
-		int[] pillars = toInt(array);*/
+		int[] pillars = toInt(array);
 
-		partionArray partionArray = new partionArray();
-		System.out.println(partionArray.Solution());
+/*		partionArray partionArray = new partionArray();
+		System.out.println(partionArray.Solution());*/
+
+		getNewArray(pillars);
 
 	}
 
@@ -62,6 +65,21 @@ class Main {
 			return 0;
 	}
 
+	public static int[] getNewArray(int[] oldArray) {
+		int sum = 0;
+		int[] newArray = new int[0];
+		for (int i : oldArray) {
+			sum += i;
+		}
+		if (sum % 2 != 0) {
+			// 找出数组中值最小的元素 删除
+			int i =Arrays.stream(oldArray).min().getAsInt();
+			newArray = Arrays.stream(oldArray).filter(res -> {
+				return res != i;
+			}).toArray();
+		}
+		return newArray;
+	}
 }
 
 class partionArray {
