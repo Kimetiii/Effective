@@ -3,6 +3,7 @@ package cn.songsenior.demo;
 import java.util.Scanner;
 
 /**
+ * 卖水果
  * 给出两个数组 m,n
  * 用 m[i] 代表第i个水果的成本价，n[i] 代表第i个水果能卖出的价钱，加入现在有本钱k元，最多能赚多少钱？
  * 说明：
