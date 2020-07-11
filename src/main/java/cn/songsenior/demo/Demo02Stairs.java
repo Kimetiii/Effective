@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 /**
  * N阶楼梯的走法
+ * 一个楼梯有 N 阶，从下往上走，一步可以走一阶，也可以走两阶，有多少种走法？
  */
 public class Demo02Stairs {
 	public static void main(String[] args) {
