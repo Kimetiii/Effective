@@ -11,47 +11,31 @@ import java.util.*;
  */
 public class Demo04StringPermutation {
 	public static void main(String[] args) {
-		System.out.println("输入一个长度不超过10的字符串");
-		Scanner sc = new Scanner(System.in);
-		while (sc.hasNext()) {
-			String s = sc.nextLine().toUpperCase();
-			if (!s.isEmpty()) {
-				int length = s.length();
-				char[] chars = s.toCharArray();
-				Arrays.sort(chars);
-				Map<Character, Integer> map = new HashMap<Character, Integer>();
-				for (int i = 0; i < chars.length; i++) {
-					boolean flag = true;
-					int num = 1;//该字母的个数；
-					while (flag) {
-						if (i + 1 < chars.length && chars[i] == chars[i + 1]) {
-							if (!(i + 1 < chars.length)) {
-								break;
-							}
-							i++;
-							num++;
-						} else {
-							flag = false;
-							map.put(chars[i], num);
-						}
-					}
-				}
-				Collection<Integer> values = map.values();
-				long pailieshu = getJieChen(length);
-				for (int chushu : values) {
-					pailieshu = pailieshu / getJieChen(chushu);
-				}
-				System.out.println(pailieshu);
+		Scanner s = new Scanner(System.in);
+		char[] chars = s.nextLine().toCharArray();
+		Map<Character, Integer> map = new HashMap<Character, Integer>();
+		int num = 0;
+		for (char ch:chars) {
+			if(null == map.get(ch)) {
+				num = 0;
+			} else {
+				num = map.get(ch);
 			}
+			map.put(ch,num + 1);
 		}
+		int allSort = SortOne(chars.length);
+		for (char key : map.keySet()) {
+			allSort = allSort/SortOne(map.get(key));
+		}
+		System.out.println(allSort);
 	}
 
-	public static long getJieChen(int num) {
-		long result = 1;
-		for (int i = 0; i < num; i++) {
-			result = result * (num - i);
+	static int SortOne (int charsnum) {
+		if (charsnum == 1) {
+			return 1;
 		}
-		return result;
+		return charsnum * SortOne(charsnum - 1);
 	}
+
 
 }

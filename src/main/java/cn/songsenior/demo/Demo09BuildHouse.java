@@ -25,7 +25,9 @@ import java.util.Vector;
  * 1、2、3、6 -> 6
  * <p>
  * <p>
- * 1 2 3 4 5 6 6 7
+ * 1 2 3 4 5 6 9 -> 15
+ *
+ * 1 60 2 3 6 -> 6
  */
 
 class Main {
@@ -37,8 +39,8 @@ class Main {
 
 /*		partionArray partionArray = new partionArray();
 		System.out.println(partionArray.Solution());*/
-
-		getNewArray(pillars);
+		int[] newArray = getNewArray(pillars);
+		System.out.println();
 
 	}
 
@@ -67,18 +69,19 @@ class Main {
 
 	public static int[] getNewArray(int[] oldArray) {
 		int sum = 0;
-		int[] newArray = new int[0];
 		for (int i : oldArray) {
 			sum += i;
 		}
 		if (sum % 2 != 0) {
 			// 找出数组中值最小的元素 删除
-			int i =Arrays.stream(oldArray).min().getAsInt();
-			newArray = Arrays.stream(oldArray).filter(res -> {
+			int i = Arrays.stream(oldArray).min().getAsInt();
+			int[] newArray = Arrays.stream(oldArray).filter(res -> {
 				return res != i;
 			}).toArray();
+			return getNewArray(newArray);
+		} else {
+			return oldArray;
 		}
-		return newArray;
 	}
 }
 
